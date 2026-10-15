@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0F172A] text-slate-100 antialiased;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    color: #000 !important;
+    background: #fff !important;
+  }
+}
+
+/* Long printable documents (expense slip, purchase bill) are shown in a portal
+   (see PrintModal). While one is open the app itself is hidden for printing so
+   the document can flow over several pages. The receipt rules above are untouched. */
+@media print {
+  body.printing-slip { background: #fff !important; }
+  body.printing-slip #root { display: none !important; }
+  body.printing-slip .print-doc,
+  body.printing-slip .print-doc * { visibility: visible; }
+  body.printing-slip .print-doc { color: #000 !important; background: #fff !important; }
+  @page { margin: 12mm; }
+}
